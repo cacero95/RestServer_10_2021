@@ -51,6 +51,10 @@ const ProductSchema = Schema({
             "sold"
         ]
     },
+    count: {
+        type: Number,
+        required: [ true, "Se debe indicar la cantidad del producto" ]
+    },
     picture: {
         type: String
     }
