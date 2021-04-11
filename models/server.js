@@ -26,7 +26,7 @@ class Server {
     }
     listen() {
         this.app.listen( this.port, () => {
-            console.log( `Escuchando por el pueto ${ this.port }` );
+            console.log( `Escuchando por el puerto ${ this.port }` );
         })
     }
 }

@@ -1,15 +1,9 @@
-{
-    "status": "available",
-    "count": 500,
-    "name": "PS4",
-    "description": "Playstation console",
-    "type": "interior",
-    "material": "Metal",
-    "price": "1000000",
-    "height": 50,
-    "width": 1500,
-    "depth": 1500,
-    "color": "Black",
-    "weight": 5000,
-    "picture": "https://as01.epimg.net/meristation/imagenes/2020/01/07/noticias/1578374877_458379_1578374995_noticia_normal.jpg"
-}
+[{
+        "name": "client",
+        "permission": "rb"
+    },
+    {
+        "name": "admin",
+        "permission": "w"
+    }
+]
