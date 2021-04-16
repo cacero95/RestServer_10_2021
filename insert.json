@@ -1,9 +1,9 @@
-[{
-        "name": "client",
-        "permission": "rb"
-    },
-    {
-        "name": "admin",
-        "permission": "w"
-    }
-]
+{
+    "name": "ps4",
+    "price": 1000000,
+    "description": "Playstation console",
+    "competitor": [
+        "607a05dcfa474e0ea492ba0b",
+        "607a05e1fa474e0ea492ba0c"
+    ]
+}

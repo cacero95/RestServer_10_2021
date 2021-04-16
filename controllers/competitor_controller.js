@@ -1,7 +1,7 @@
 const { response, request } = require("express");
 const Competitor = require("../models/Competitor");
 
-const get_allCompetitors = async ( req, requets, res = response ) => {
+const get_allCompetitors = async ( req = request, res = response ) => {
     res.json({
         competitors: await Competitor.find()
     })
@@ -9,9 +9,11 @@ const get_allCompetitors = async ( req, requets, res = response ) => {
 
 const post_competitor = async ( req = request, res = response ) => {
     const date = new Date();
+    const fullDate = `${ date.getFullYear }-${ date.getMonth }-${ date.getDay() }`;
     const body = {
         ...req.body,
-        updateAt: `${ date.getFullYear }-${ date.getMonth }-${ date.getDay() }`
+        created_at: fullDate,
+        updated_at: fullDate
     };
     const newCompetitor = new Competitor( body );
     await newCompetitor.save().then(() => {
@@ -38,8 +40,44 @@ const get_competitor = async ( req = request, res = response ) => {
     })
 }
 
+const login_competitor = async ( req = request, res = response ) => {
+    const { address, password } = req.body;
+    await Competitor.findOneAndUpdate({ address, password }, { login: true })
+    .then((user) => {
+        user ? res.json({
+            message: `Welcome ${ user.name }`,
+            id: user._id
+        }) : res.json({
+            message: `User was not found`
+        })
+    }).catch((err) => {
+        res.json({
+            message: err.message
+        })
+    })   
+}
+
+const logout_competitor = async ( req = request, res = response ) => {
+    await Competitor.findByIdAndUpdate( req.params.id, { login: false })
+    .then((user) => {
+        user ? res.json({
+            message: `See ya ${ user.name }`,
+            id: user._id,
+            login: user.login
+        }) : res.json({
+            message: `User was not found`
+        })
+    }).catch((err) => {
+        res.json({
+            message: err.message
+        })
+    })
+}
+
 module.exports = {
     get_allCompetitors,
     post_competitor,
-    get_competitor
+    get_competitor,
+    login_competitor,
+    logout_competitor
 }

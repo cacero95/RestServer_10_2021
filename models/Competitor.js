@@ -3,9 +3,13 @@ const { Schema, model } = require("mongoose");
 const CompetitorSchema = Schema ({
     name: {
         type: String,
-        required: [ true, 'El campo nombre es requerido' ]
+        required: [ true, 'El campo nombre es requerido' ],
+        unique: true
     },
-    updateAt: {
+    created_at: {
+        type: Date
+    },
+    updated_at: {
         type: Date
     },
     surname: {
@@ -24,6 +28,7 @@ const CompetitorSchema = Schema ({
     },
     address: {
         type: String,
+        unique: true,
         required: [ true, 'El campo direccion es requerido' ]
     },
     city: {
@@ -36,7 +41,15 @@ const CompetitorSchema = Schema ({
     },
     winner: {
         type: Boolean
+    },
+    password: {
+        type: String,
+        required: [ true, 'La contraseña es requerida' ]
+    },
+    login: {
+        type: Boolean,
+        default: true
     }
 });
 
-module.exports = model( 'Competiror', CompetitorSchema );
+module.exports = model( 'Competitor', CompetitorSchema );
