@@ -23,6 +23,7 @@ class Server {
     routes() {
         this.app.use( this.users_path, require('../routes/user_routes') );
         this.app.use( this.products_path, require('../routes/product_routes') );
+        this.app.use( this.products_path, require('../routes/competitor_routes') );
     }
     listen() {
         this.app.listen( this.port, () => {
