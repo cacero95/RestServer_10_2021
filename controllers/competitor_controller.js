@@ -63,7 +63,7 @@ const logout_competitor = async ( req = request, res = response ) => {
         user ? res.json({
             message: `See ya ${ user.name }`,
             id: user._id,
-            login: user.login
+            login: false
         }) : res.json({
             message: `User was not found`
         })
