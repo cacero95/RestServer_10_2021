@@ -1,5 +1,7 @@
 const { response, request } = require("express");
+const { dateCreator } = require("../helpers/dateCreator");
 const Competitor = require("../models/Competitor");
+const Producto = require("../models/Producto");
 
 const get_allCompetitors = async ( req = request, res = response ) => {
     res.json({
@@ -7,11 +9,21 @@ const get_allCompetitors = async ( req = request, res = response ) => {
     })
 }
 
+const findProducto = async ( productos ) => {
+    const documents = [];
+    for ( let producto of productos ) {
+        producto &&
+        documents.push( await Producto.findOne({ _id: producto }) );
+    }
+    return documents;
+}
+
 const post_competitor = async ( req = request, res = response ) => {
-    const date = new Date();
-    const fullDate = `${ date.getFullYear }-${ date.getMonth }-${ date.getDay() }`;
+    const fullDate = dateCreator();
+    const { producto, ...document } = req.body;
     const body = {
-        ...req.body,
+        ...document,
+        producto: await findProducto( producto ),
         created_at: fullDate,
         updated_at: fullDate
     };
@@ -74,10 +86,31 @@ const logout_competitor = async ( req = request, res = response ) => {
     })
 }
 
+const filterCompetitorsByletter = async ( req = response, res = response ) => {
+    const letter = req.body.letter
+    ? req.body.letter.toLocaleUpperCase()
+    : 'A';
+    // regex works for find documents that starts with anything
+    await Competitor.find({ name: { $regex : `^${ letter }` }})
+    .then(( documents ) => {
+        documents.length > 0 ? res.json({
+            documents
+        }) : res.json({
+            message: 'The system has not found any documents'
+        })
+    }).catch(( err ) => {
+        res.status(400).json({
+            message: err.message
+        })
+    })
+}
+
+
 module.exports = {
     get_allCompetitors,
     post_competitor,
     get_competitor,
     login_competitor,
-    logout_competitor
+    logout_competitor,
+    filterCompetitorsByletter
 }

@@ -1,4 +1,5 @@
 const { response, request } = require("express");
+const { dateCreator } = require("../helpers/dateCreator");
 const Item = require("../models/Item");
 
 const get_allItems = async ( req = request, res = response ) => {
@@ -8,8 +9,7 @@ const get_allItems = async ( req = request, res = response ) => {
 }
 
 const post_item = async ( req = request, res = response ) => {
-    const date = new Date();
-    const fullDate = `${ date.getFullYear }-${ date.getMonth }-${ date.getDay() }`; 
+    const fullDate = dateCreator();
     const newItem = new Item({
         ...req.body,
         created_at: fullDate,

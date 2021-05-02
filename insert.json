@@ -1,9 +1,16 @@
 {
-    "name": "ps4",
-    "price": 1000000,
-    "description": "Playstation console",
-    "competitor": [
-        "607a05dcfa474e0ea492ba0b",
-        "607a05e1fa474e0ea492ba0c"
+    "name": "A1",
+    "surname": "A1",
+    "age": 20,
+    "telephone": "1234567",
+    "cellphone": "1234567890",
+    "address": "a1@gmail.com",
+    "city": "por ahy",
+    "country": "por ahy",
+    "password": "admin",
+    "producto": [
+        "608dbaffe4f77018e5408e91",
+        "608dbb36e4f77018e5408e92",
+        "608dbb3be4f77018e5408e93"
     ]
 }

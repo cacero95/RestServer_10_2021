@@ -5,8 +5,10 @@ const {
     get_competitor,
     post_competitor,
     login_competitor,
-    logout_competitor
+    logout_competitor,
+    filterCompetitorsByletter
 } = require("../controllers/competitor_controller");
+const { validateProducto } = require("../helpers/dbValidations");
 const { validateFields } = require("../middlewares/validation_fields");
 
 const router = Router();
@@ -21,11 +23,17 @@ router.get (
     get_competitor
 );
 
+router.get (
+    '/letter/',
+    filterCompetitorsByletter
+)
+
 router.post (
     '/',
     [
         check( 'address', 'El correo es requerido' ).notEmpty(),
         check( 'address', 'correo invalido' ).isEmail(),
+        validateProducto,
         validateFields
     ],
     post_competitor

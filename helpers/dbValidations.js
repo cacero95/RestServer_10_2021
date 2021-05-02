@@ -34,9 +34,18 @@ const validatePhone = ( req, res, next ) => {
     });
 }
 
+const validateProducto = async ( req, res, next ) => {
+    const { producto } = req.body;
+    !producto || producto.length === 0
+    ? res.status(400).json({
+        message: 'Cada competidor debe tener al menos un producto asociado'
+    }) : next();
+}
+
 module.exports = {
     validateRole,
     validatePermissionAdmin,
     validatePermissionUser,
-    validatePhone
+    validatePhone,
+    validateProducto
 }

@@ -10,6 +10,7 @@ class Server {
         this.products_path = "/api/products";
         this.competitors_path = "/api/competitor";
         this.item_path = "/api/item";
+        this.productos_path = "/api/producto";
         this.dbaConnection();
         this.middlewares();
         this.routes();
@@ -27,6 +28,7 @@ class Server {
         this.app.use( this.products_path, require('../routes/product_routes') );
         this.app.use( this.competitors_path, require('../routes/competitor_routes') );
         this.app.use( this.item_path, require('../routes/item_routes') );
+        this.app.use( this.productos_path, require('../routes/producto_routes') );
     }
     listen() {
         this.app.listen( this.port, () => {
