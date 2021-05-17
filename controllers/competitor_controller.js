@@ -21,6 +21,7 @@ const findProducto = async ( productos ) => {
 const post_competitor = async ( req = request, res = response ) => {
     const fullDate = dateCreator();
     const { producto, ...document } = req.body;
+    console.log( req.body );
     const body = {
         ...document,
         producto: await findProducto( producto ),

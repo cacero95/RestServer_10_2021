@@ -20,6 +20,7 @@ const post_producto = async ( req = request, res = response ) => {
         ...req.body,
         purchaseDate: dateCreator()
     };
+    console .log( body );
     const newProducto = new Producto( body );
     newProducto.save().then(() => {
         res.json({

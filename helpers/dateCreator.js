@@ -1,6 +1,5 @@
 const dateCreator = () => {
-    const date = new Date();
-    return  `${ date.getDate() }`;
+    return  `${ new Date() }`;
 }
 
 module.exports = { dateCreator };
