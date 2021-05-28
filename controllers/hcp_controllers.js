@@ -25,7 +25,6 @@ const create_hcp = async ( req = request, res = response ) => {
         created_at: fullDate,
         updated_at: fullDate
     });
-    console.log( newHcp );
     await newHcp.save().then(() => {
         res.json({
             message: 'Paciente creado',
