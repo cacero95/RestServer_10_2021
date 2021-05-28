@@ -12,7 +12,7 @@ const get_AllHcp = async ( req = request, res = response ) => {
 
 const filter_hcp = async ( req = request, res = response ) => {
     try {
-        res.json({ hcp: await modelHcp.find({ ...req.body }) });
+        res.json({ hcp: await modelHcp.findOne({ ...req.body }) });
     } catch ( err ) {
         res.status(400).json({ message: err.message });
     }
