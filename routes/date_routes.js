@@ -3,7 +3,8 @@ const {
     get_AllDates, 
     createDate, 
     filterByDateRange, 
-    filterDate 
+    filterDate,
+    filterByPerson
 } = require("../controllers/date_controller");
 
 const router = Router();
@@ -27,6 +28,11 @@ router.get (
     '/filter/',
     filterDate
 );
+
+router.get (
+    '/filterByPerson/',
+    filterByPerson
+)
 
 
 module.exports = router;
