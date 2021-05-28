@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { get_AllHcp, create_hcp, update_hcp } = require("../controllers/hcp_controllers");
+const { get_AllHcp, create_hcp, update_hcp, filter_hcp } = require("../controllers/hcp_controllers");
 
 const router = Router();
 
@@ -16,6 +16,11 @@ router.post (
 router.put (
     '/:id',
     update_hcp
+);
+
+router.get (
+    '/filter/',
+    filter_hcp
 )
 
 module.exports = router;
