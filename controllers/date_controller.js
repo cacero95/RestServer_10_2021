@@ -14,7 +14,7 @@ const get_AllDates = async ( req = request, res = response ) => {
 
 const filterByPerson = async ( req = request , res = response ) => {
     try {
-        const date = await modelAppointment.findOne({ ...req.body });
+        const date = await modelAppointment.find({ ...req.body });
         date ? res.json({ cita: date })
         : res.status(400).json({ mensaje: "Cita no encontrada" });
     } catch (err) {
