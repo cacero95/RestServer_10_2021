@@ -1,4 +1,6 @@
 {
-    "patient": "60a9635eefb487068db135a4",
-    "place": "mi casa"
+    "symptom": {
+        "name": "sintoma 1",
+        "description": "esta muy mal"
+    }
 }

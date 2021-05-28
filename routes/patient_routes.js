@@ -5,7 +5,8 @@ const {
     post_patient,
     update_patient,
     make_report,
-    vaccinate
+    vaccinate,
+    addSymptoms
 } = require("../controllers/patient_controller");
 
 const router = Router();
@@ -38,6 +39,11 @@ router.put (
 router.put (
     '/vaccinate/:id',
     vaccinate
+);
+
+router.put (
+    '/symptoms/:id',
+    addSymptoms
 )
 
 module.exports = router;

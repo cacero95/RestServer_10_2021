@@ -81,6 +81,22 @@ const vaccinate = async ( req = request, res = response ) => {
     }
 }
 
+const addSymptoms = async ( req = request, res = response ) => {
+    try {
+        const patient = await modelPatient
+        .findByIdAndUpdate( req.params.id, req.body );
+        patient ? res.json ({
+            mensaje: 'Sintomas agregados',
+            paciente: { ...patient._doc, ...req.body }
+        }) : res.status(400).json({
+            mensaje: 'paciente no encontrado'
+        })
+    } catch ( err ) {
+        res.status(400).json({ message: err.message })
+    }
+}
+
+
 const make_report = async ( req = request, res = response ) => {
     try {
 
@@ -129,5 +145,6 @@ module.exports = {
     post_patient,
     update_patient,
     make_report,
-    vaccinate
+    vaccinate,
+    addSymptoms
 }
