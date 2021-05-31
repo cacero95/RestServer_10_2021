@@ -173,6 +173,8 @@ const make_report = async ( req = request, res = response ) => {
                 vacunado: document.vaccinated
             })
         });
+        patients["tasaVacunados"] = 
+        `${ ( patients.vacunados * 100 ) / patients.total }%`;
         const actualDate = new Date();
         res.json({
             fecha: actualDate,
