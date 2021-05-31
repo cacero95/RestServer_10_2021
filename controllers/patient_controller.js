@@ -114,12 +114,12 @@ const vaccinate = async ( req = request, res = response ) => {
                 date: new Date()
             }
             patient.vaccinated = vaccinated;
+            patient.id_cita = appointment.patient
             await patient.save();
             res.json({
                 mensaje: "paciente vacunado",
                 paciente: {
                     ...patient._doc,
-                    id_cita: appointment.patient
                 },
             })
         }
@@ -190,7 +190,7 @@ const make_report = async ( req = request, res = response ) => {
 const filterPatientByHcp = async ( req = request, res = response ) => {
     try {
         const patient = await modelPatient.findOne({
-            ic_cita: req.body.hcp
+            id_cita: req.body.hcp
         });
         patient ? res.json({
             paciente: patient
