@@ -18,6 +18,50 @@ const filter_patient = async ( req = request, res = response ) => {
     }).catch( err => res.status(400).json({ mensaje: err.message }));
 }
 
+
+const applyMaxDate = ( maxDate, res ) => {
+    try {
+        return modelPatient
+            .find({ "vaccinated.date": { $lte: maxDate } });
+    } catch (err) {
+        res.status(400).json({ message: err.message })
+    }
+}
+
+const applyMinDate = ( minDate, res ) => {
+    try {
+        return modelPatient
+            .find({ "vaccinated.date": { $gte: minDate } })
+    } catch (err) {
+        res.status(400).json({ message: err.message })
+    }
+}
+
+const minMaxDate = ( minDate, maxDate, res ) => {
+    try {
+        return modelPatient
+            .find({ "vaccinated.date": { $gte: minDate, $lte: maxDate } });
+    } catch (err) {
+        res.status(400).json({ message: err.message })
+    }
+}
+
+
+const filterPatientDateRange = async ( req = request, res = response ) => {
+    const { minDate, maxDate } = req.body;
+    let dates = [];
+    if ( minDate && maxDate ) {
+        dates = await minMaxDate ( minDate, maxDate, res );
+    } else if ( minDate ) {
+        dates = await applyMinDate( minDate, res );
+    } else {
+        dates = await applyMaxDate( maxDate, res );
+    }
+    res.json({
+        citas: dates
+    });
+}
+
 const post_patient = async ( req = request, res = response ) => {
 
     const fullDate = dateCreator();
@@ -146,5 +190,6 @@ module.exports = {
     update_patient,
     make_report,
     vaccinate,
-    addSymptoms
+    addSymptoms,
+    filterPatientDateRange
 }

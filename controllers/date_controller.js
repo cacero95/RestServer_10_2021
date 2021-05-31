@@ -2,7 +2,6 @@ const { request, response } = require("express");
 const { dateCreator } = require("../helpers/dateCreator");
 const { modelAppointment } = require("../models/Date");
 const { modelHcp } = require("../models/Hcp");
-const { modelPatient } = require("../models/Patient");
 
 const get_AllDates = async ( req = request, res = response ) => {
     try {
@@ -27,13 +26,10 @@ const validateAppointment = ( { startTime, endTime, appointments }, time ) => {
         return startTime;
     }
     const last_appointment = new Date( appointments[ appointments.length - 1 ] );
-    console.log( last_appointment );
     last_appointment.setMinutes( last_appointment.getMinutes() + 30 );
     console.log( last_appointment );
     const starttime = new Date( startTime );
     const endtime = new Date( endTime );
-    console.log( starttime );
-    console.log( endtime );
     return last_appointment.getTime() >= starttime.getTime() &&
            last_appointment.getTime() < endtime.getTime()
            ? last_appointment : false;
@@ -93,42 +89,42 @@ const createDate = async ( req = request, res = response ) => {
 }
 
 
-const applyMaxDate = async ( maxDate, res ) => {
+const applyMaxDate = ( maxDate, res ) => {
     try {
-        return await modelAppointment
+        return modelAppointment
             .find({ date: { $lte: maxDate } });
     } catch (err) {
         res.status(400).json({ message: err.message })
     }
 }
 
-const applyMinDate = async ( minDate, res ) => {
+const applyMinDate = ( minDate, res ) => {
     try {
-        return await modelAppointment
+        return modelAppointment
             .find({ date: { $gte: minDate } })
     } catch (err) {
         res.status(400).json({ message: err.message })
     }
 }
 
-const minMaxDate = async ( minDate, maxDate, res ) => {
+const minMaxDate = ( minDate, maxDate, res ) => {
     try {
-        return await modelAppointment
+        return modelAppointment
             .find({ date: { $gte: minDate, $lte: maxDate } });
     } catch (err) {
         res.status(400).json({ message: err.message })
     }
 }
 
-const filterByDateRange = ( req = request, res = response ) => {
+const filterByDateRange = async ( req = request, res = response ) => {
     const { minDate, maxDate } = req.body;
     let dates = [];
     if ( minDate && maxDate ) {
-        dates = minMaxDate ( minDate, maxDate, res );
+        dates = await minMaxDate ( minDate, maxDate, res );
     } else if ( minDate ) {
-        dates = applyMinDate( minDate, res );
+        dates = await applyMinDate( minDate, res );
     } else {
-        dates = applyMaxDate( maxDate, res );
+        dates = await applyMaxDate( maxDate, res );
     }
     res.json({
         citas: dates
