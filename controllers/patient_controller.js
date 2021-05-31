@@ -58,7 +58,8 @@ const filterPatientDateRange = async ( req = request, res = response ) => {
         dates = await applyMaxDate( maxDate, res );
     }
     res.json({
-        citas: dates
+        citas: dates,
+        numero: dates.length
     });
 }
 
