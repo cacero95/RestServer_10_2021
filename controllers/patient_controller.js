@@ -116,7 +116,8 @@ const vaccinate = async ( req = request, res = response ) => {
             }
             res.json({
                 mensaje: "paciente vacunado",
-                paciente: patient
+                paciente: patient,
+                id_cita: appointment.patient
             })
         }
 
