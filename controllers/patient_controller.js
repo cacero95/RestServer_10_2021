@@ -130,6 +130,17 @@ const vaccinate = async ( req = request, res = response ) => {
     }
 }
 
+
+const filterPatientPostVacuantion = async ( req = request, res = response ) => {
+    try {
+        const patient = await modelPatient.findOne({ "vaccinated.status": true });
+        patient ? res.json({ pacientes: patient })
+        : res.status(400).json({ mensaje: "Pacientes no encontrados" });
+    } catch ( err ) {
+        res.status(400).json({ message: err.message })
+    }
+}
+
 const addSymptoms = async ( req = request, res = response ) => {
     try {
         const patient = await modelPatient.findById( req.params.id );
@@ -219,5 +230,6 @@ module.exports = {
     vaccinate,
     addSymptoms,
     filterPatientDateRange,
-    filterPatientByHcp
+    filterPatientByHcp,
+    filterPatientPostVacuantion
 }
