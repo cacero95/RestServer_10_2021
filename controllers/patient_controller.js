@@ -132,14 +132,19 @@ const vaccinate = async ( req = request, res = response ) => {
 
 const addSymptoms = async ( req = request, res = response ) => {
     try {
-        const patient = await modelPatient
-        .findByIdAndUpdate( req.params.id, req.body );
-        patient ? res.json ({
-            mensaje: 'Sintomas agregados',
-            paciente: { ...patient._doc, ...req.body }
-        }) : res.status(400).json({
-            mensaje: 'paciente no encontrado'
-        })
+        const patient = await modelPatient.findById( req.params.id );
+        if ( patient ) {
+            patient.symptom.push( req.body );
+            await patient.save();
+            res.json({
+                mensaje: "Sintomas agregados",
+                paciente: patient
+            })
+        } else {
+            res.status(400).json({
+                mensaje: "Usuario no encontrado"
+            })
+        }
     } catch ( err ) {
         res.status(400).json({ message: err.message })
     }
