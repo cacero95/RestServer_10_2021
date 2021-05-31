@@ -7,7 +7,8 @@ const {
     make_report,
     vaccinate,
     addSymptoms,
-    filterPatientDateRange
+    filterPatientDateRange,
+    filterPatientByHcp
 } = require("../controllers/patient_controller");
 
 const router = Router();
@@ -30,7 +31,12 @@ router.get (
 router.get (
     '/filterByDate/',
     filterPatientDateRange
-)
+);
+
+router.get(
+    '/filterByHcp',
+    filterPatientByHcp
+);
 
 router.post (
     '/',

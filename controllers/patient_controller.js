@@ -108,16 +108,19 @@ const vaccinate = async ( req = request, res = response ) => {
         } else {
             const patient = await modelPatient
             .findOne({ _id: appointment.patient });
-    
-            patient.vaccinated = {
+            const vaccinated = {
                 status: true,
-                vaccine: req.body.vaccine,
+                vaccine: req.body.vaccinate,
                 date: new Date()
             }
+            patient.vaccinated = vaccinated;
+            await patient.save();
             res.json({
                 mensaje: "paciente vacunado",
-                paciente: patient,
-                id_cita: appointment.patient
+                paciente: {
+                    ...patient._doc,
+                    id_cita: appointment.patient
+                },
             })
         }
 
@@ -184,6 +187,21 @@ const make_report = async ( req = request, res = response ) => {
     }
 }
 
+const filterPatientByHcp = async ( req = request, res = response ) => {
+    try {
+        const patient = await modelPatient.findOne({
+            ic_cita: req.body.hcp
+        });
+        patient ? res.json({
+            paciente: patient
+        }) : res.status(400).json({
+            mensaje: "Paciente no encontrado"
+        })
+    } catch ( err ) {
+        res.status(400).json({ message: err.message });
+    }
+}
+
 
 module.exports = {
     get_allPatients,
@@ -193,5 +211,6 @@ module.exports = {
     make_report,
     vaccinate,
     addSymptoms,
-    filterPatientDateRange
+    filterPatientDateRange,
+    filterPatientByHcp
 }

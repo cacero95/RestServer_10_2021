@@ -86,6 +86,9 @@ const PatientSchema = Schema({
     symptom: {
         type: [ SymptomSchema ],
         default: []
+    },
+    id_cita: {
+        type: String
     }
 });
 
