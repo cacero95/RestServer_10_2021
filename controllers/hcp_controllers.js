@@ -48,10 +48,30 @@ const update_hcp = async ( req = request, res = response ) => {
     }
 }
 
+const loginHcp = async ( req = request, res = response ) => {
+    try {
+        const hcp = await modelHcp.findOne ({
+            email: req.body.email,
+            number_document: req.body.number_document
+        });
+        hcp ? res.json({
+            message: 'Bienvenido',
+            login: true,
+            patient
+        }) : res.status(400).json({
+            message: 'Usuario no encontrado',
+            login: false
+        });
+    } catch (err) {
+        res.status(400).json({ message: err.message });
+    }
+}
+
 module.exports = {
     get_AllHcp,
     filter_hcp,
     create_hcp,
-    update_hcp
+    update_hcp,
+    loginHcp
 }
 

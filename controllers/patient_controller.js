@@ -220,6 +220,25 @@ const filterPatientByHcp = async ( req = request, res = response ) => {
     }
 }
 
+const loginPatient = async ( req = request, res = response ) => {
+    try {
+        const patient = await modelPatient.findOne({
+            email: req.body.email,
+            number_document: req.body.number_document
+        });
+        patient ? res.json({
+            message: 'Bienvenido',
+            login: true,
+            patient
+        }) : res.status(400).json({
+            message: 'Usuario no encontrado',
+            login: false
+        });
+    } catch (err) {
+        res.status(400).json({ message: err.message });
+    }
+}
+
 
 module.exports = {
     get_allPatients,
@@ -231,5 +250,6 @@ module.exports = {
     addSymptoms,
     filterPatientDateRange,
     filterPatientByHcp,
-    filterPatientPostVacuantion
+    filterPatientPostVacuantion,
+    loginPatient
 }

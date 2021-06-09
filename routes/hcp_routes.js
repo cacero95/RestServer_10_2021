@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { get_AllHcp, create_hcp, update_hcp, filter_hcp } = require("../controllers/hcp_controllers");
+const { get_AllHcp, create_hcp, update_hcp, filter_hcp, loginHcp } = require("../controllers/hcp_controllers");
 
 const router = Router();
 
@@ -12,6 +12,11 @@ router.post (
     '/',
     create_hcp
 );
+
+router.post (
+    '/loginHcp/',
+    loginHcp
+)
 
 router.put (
     '/:id',
