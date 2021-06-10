@@ -24,7 +24,7 @@ router.get (
     filterByDateRange
 );
 
-router.get (
+router.post (
     '/filter/',
     filterDate
 );
