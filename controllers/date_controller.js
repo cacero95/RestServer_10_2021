@@ -134,7 +134,7 @@ const filterByDateRange = async ( req = request, res = response ) => {
 const filterDate = async ( req = request, res = response ) => {
     try {
         res.json({
-            citas: await modelAppointment.find({ ...req.body })
+            citas: await modelAppointment.findOne({ ...req.body })
         })
     } catch (err) {
         res.status(400).json({ message: err.message })
