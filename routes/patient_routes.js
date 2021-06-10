@@ -11,7 +11,8 @@ const {
     filterPatientDateRange,
     filterPatientByHcp,
     filterPatientPostVacuantion,
-    loginPatient
+    loginPatient,
+    filterOnePatient
 } = require("../controllers/patient_controller");
 const { validateFields } = require("../middlewares/validation_fields");
 
@@ -22,22 +23,27 @@ router.get (
     get_allPatients
 );
 
-router.get (
+router.post (
     '/',
     filter_patient
 );
+
+router.post (
+    '/filter/',
+    filterOnePatient
+)
 
 router.get (
     '/report/',
     make_report
 );
 
-router.get (
+router.post (
     '/filterByDate/',
     filterPatientDateRange
 );
 
-router.get(
+router.post(
     '/filterByHcp/',
     filterPatientByHcp
 );

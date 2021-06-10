@@ -43,7 +43,7 @@ router.put (
     update_hcp
 );
 
-router.get (
+router.post (
     '/filter/',
     filter_hcp
 );

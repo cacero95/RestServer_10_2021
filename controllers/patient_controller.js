@@ -18,6 +18,19 @@ const filter_patient = async ( req = request, res = response ) => {
     }).catch( err => res.status(400).json({ mensaje: err.message }));
 }
 
+const filterOnePatient = async ( req = request, res = response ) => {
+    try {
+        const patient = await modelPatient.findOne({ ...req.body });
+        patient ? res.json({
+            patient
+        }) : res.status(400).json({
+            message: 'Paciente no encontrado'
+        })
+    } catch (err) {
+        res.status(400).json({ message: err.message })
+    }
+}
+
 
 const applyMaxDate = ( maxDate, res ) => {
     try {
@@ -249,6 +262,7 @@ module.exports = {
     vaccinate,
     addSymptoms,
     filterPatientDateRange,
+    filterOnePatient,
     filterPatientByHcp,
     filterPatientPostVacuantion,
     loginPatient
