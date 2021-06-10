@@ -57,7 +57,7 @@ const loginHcp = async ( req = request, res = response ) => {
         hcp ? res.json({
             message: 'Bienvenido',
             login: true,
-            patient
+            hcp
         }) : res.status(400).json({
             message: 'Usuario no encontrado',
             login: false
